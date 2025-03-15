@@ -15,9 +15,16 @@ const fbr = 0.5; // fuel burn rate (kg/s)
 
 const convertAccToKmH2 = (acc) => acc * 12960;
 
+if (vel < 0) throw new Error("Velocity cannot be negative.");
+if (acc < 0) throw new Error("Acceleration cannot be negative.");
+if (time <= 0) throw new Error("Time must be greater than zero.");
+if (fuel < 0) throw new Error("Fuel cannot be negative.");
+if (fbr < 0) throw new Error("Fuel burn rate cannot be negative.");
+
+
 const d2 = d + (vel*time) //calcultes new distance
 const rf = fbr*time //calculates remaining fuel
-const vel2 = calcNewVel(acc, vel, time) //calculates new velocity based on acceleration
+const vel2 = calcNewVel(vel, acc,  time) //calculates new velocity based on acceleration
 
 // Pick up an error with how the function below is called and make it robust to such errors
 function calcNewVel(vel, acc, time) {
@@ -31,6 +38,13 @@ function calcNewVel(vel, acc, time) {
 function calcNewDist(d, vel, time) {
   return d + (vel * (time / 3600));
 }
+
+function calcRemainingFuel(fuel, fbr, time) {
+  const remainingFuel = fuel - (fbr * time); // Subtract fuel used
+  if (remainingFuel < 0) throw new Error("Not enough fuel to sustain burn rate.");
+  return remainingFuel;
+}
+
 
 console.log(`Corrected New Velocity: ${vel2} km/h`);
 console.log(`Corrected New Distance: ${d2} km`);
