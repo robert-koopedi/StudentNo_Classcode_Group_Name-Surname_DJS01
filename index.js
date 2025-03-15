@@ -28,6 +28,10 @@ function calcNewVel(vel, acc, time) {
   return vel + (accKmH2 * (time /3600))
 }
 
+function calcNewDist(d, vel, time) {
+  return d + (vel * (time / 3600));
+}
+
 console.log(`Corrected New Velocity: ${vel2} km/h`);
 console.log(`Corrected New Distance: ${d2} km`);
 console.log(`Corrected Remaining Fuel: ${rf} kg`);
